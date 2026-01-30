@@ -1,0 +1,7 @@
+{
+    "parameters": {
+        "workflows_la_migrate_name": {
+            "value": "la-migrate-prod"
+        }
+    }
+}

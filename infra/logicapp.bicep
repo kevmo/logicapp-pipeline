@@ -1,7 +1,7 @@
-param workflows_la_migrate_dev_name string
+param workflows_la_migrate_name string
 
 resource workflows_la_migrate_dev_name_resource 'Microsoft.Logic/workflows@2017-07-01' = {
-  name: workflows_la_migrate_dev_name
+  name: workflows_la_migrate_name
   location: 'eastus'
   properties: {
     state: 'Enabled'
