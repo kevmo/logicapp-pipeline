@@ -30,7 +30,7 @@ resource workflows_la_migrate_dev_name_resource 'Microsoft.Logic/workflows@2017-
             body: {
               environment: 'dev'
               source: 'portal-original'
-              message: 'Hello from migrated Logic App'
+              message: 'LOLLL Hello from migrated Logic App'
             }
           }
         }

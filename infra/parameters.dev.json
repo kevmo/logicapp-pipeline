@@ -1,7 +1,13 @@
 {
     "parameters": {
         "workflows_la_migrate_name": {
-            "value": "la-migrate-dev"
+            "value": "la-migrate-dev",
+            "location": {
+                "value": "eastus"
+            },
+            "environment": {
+                "value": "dev"
+            }
         }
     }
 }
