@@ -7,35 +7,26 @@ on:
 permissions:
   id-token: write
   contents: read
-
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    # Map branch → GitHub Environment
-    # environment: ${{ github.ref_name == 'main' && 'prod' || github.ref_name }}
     environment: ${{ github.ref_name == 'main' && 'prod' || github.ref_name == 'uat' && 'uat' || 'dev' }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Azure OIDC login (secretless)
-      - name: Azure login
+      - name: Azure login (OIDC)
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          allow-no-subscriptions: true
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      # Deploy Logic App via Bicep
       - name: Deploy Logic App
         uses: azure/arm-deploy@v1
         with:
           scope: resourcegroup
-        #   resourceGroupName: rg-la-${{ github.environment }}
-          resourceGroupName: rg-la-dev
+          resourceGroupName: rg-la-${{ github.environment }}
           template: infra/main.bicep
-        #   parameters: infra/params.${{ github.environment }}.json
-          parameters: infra/params.dev.json
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          parameters: infra/params.${{ github.environment }}.json
