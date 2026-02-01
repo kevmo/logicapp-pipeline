@@ -11,24 +11,22 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # We'll set the environment explicitly via a step output
-    environment: ${{ steps.set-env.outputs.ENV }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Determine environment
-        id: set-env
+      # Simple if/else for environment
+      - name: Set ENV
         run: |
-          echo "GITHUB_BRANCH=${GITHUB_REF_NAME}"
           if [ "${GITHUB_REF_NAME}" = "main" ]; then
             echo "ENV=prod" >> $GITHUB_ENV
+          elif [ "${GITHUB_REF_NAME}" = "uat" ]; then
+            echo "ENV=uat" >> $GITHUB_ENV
           else
-            echo "ENV=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+            echo "ENV=dev" >> $GITHUB_ENV
           fi
-          echo "ENV=${GITHUB_REF_NAME}"  # just for logging
-          echo "::set-output name=ENV::${GITHUB_REF_NAME}"
+          echo "Environment is $ENV"
 
       - name: Azure login (OIDC)
         uses: azure/login@v2
