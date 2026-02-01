@@ -33,6 +33,8 @@ jobs:
         uses: azure/arm-deploy@v1
         with:
           scope: resourcegroup
-          resourceGroupName: rg-la-${{ github.environment }}
+        #   resourceGroupName: rg-la-${{ github.environment }}
+          resourceGroupName: rg-la-dev
           template: infra/main.bicep
-          parameters: infra/params.${{ github.environment }}.json
+        #   parameters: infra/params.${{ github.environment }}.json
+          parameters: infra/params.dev.json
